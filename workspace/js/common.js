@@ -1,5 +1,3 @@
-const { util } = require('config');
-
 // @ch4. 서비스 워커 등록
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
