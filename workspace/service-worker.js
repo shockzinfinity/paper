@@ -1,9 +1,15 @@
+const VERSION = 'v1';
+
 self.addEventListener('install', (event) => {
-  console.log('Service worker - install');
+  console.log('Service worker - install', VERSION);
+
+  self.skipWaiting(); // 제어중인 서비스워커가 존재해도 건너뜀
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('Service worker - activate');
+  console.log('Service worker - activate', VERSION);
+
+  self.clients.claim(); // 활성화 즉시 클라이언트 제어
 });
 
 self.addEventListener('fetch', (event) => {
