@@ -1,9 +1,24 @@
+const { util } = require('config');
+
 // @ch4. 서비스 워커 등록
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/service-worker.js')
-    .then((registeration) => {
+    .then((registration) => {
       // 등록완료
+      registration.addEventListener('updatefound', () => {
+        // 설치 중인 새로운 서비스 워커
+        const newServiceWorker = registration.installing; // installing, waiting, activate - 3가지 상태
+        console.log('New update found!');
+
+        newServiceWorker.addEventListener('statechange', (event) => {
+          const state = event.target.state;
+          console.log('PAPER: ' + state);
+          if (state === 'installed') {
+            util.message('앱을 재시작하면 업데이트가 적용됩니다.');
+          }
+        });
+      });
     });
 }
 
